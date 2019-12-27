@@ -1,18 +1,22 @@
 #!/usr/bin/python
 import argparse
 import socket
+import sys
 
 parser = argparse.ArgumentParser(description='Configura los parametros para lanzar escaneos desd SecDevOps')
-parser.add_argument('--IP', type=str, nargs=?, help='IP del servidor donde se ejecuta el SecDevOps')
-parser.add_argument('--port', type=int, nargs=?, help='puerto donde escucha el SecDevOps')
-parser.add_argument('--url', type=str, nargs=?, help='URL a escanear')
-parser.add_argument('--tipo', type=str, nargs=?, help='Tipo de escaneo, Estatico (e) o Dinamico (D)')
-error=""
+parser.add_argument('--IP', type=str, help='IP del servidor donde se ejecuta el SecDevOps')
+parser.add_argument('--port', type=int, help='puerto donde escucha el SecDevOps')
+parser.add_argument('--url', type=str, help='URL a escanear')
+parser.add_argument('--tipo', type=str, help='Tipo de escaneo, Estatico (e) o Dinamico (d)')
+error=0
 
-server_ip
-server_port
-url
-tipo
+
+args = parser.parse_args()
+
+server_ip=0
+server_port=0
+url=0
+tipo=0
 
 if args.IP:
 	server_ip=args.IP
@@ -32,24 +36,34 @@ else:
 if args.tipo:
 	tipo=args.tipo
 else:
-	error="Es necesario ingresar la URL a testear(--url <url a escanear>)"
+	error="Es necesario ingresar el tipo de escaneo(--tipo <Dinamico (d) o Estatico (e)>)"
+
+if error:
+	print error
+	sys.exit()
 
 
-def conexion(server_ip):
+def conexion():
 	respuesta=''
 	s = socket.socket()
-	msg=u_mac+"->"+u_ip
+	msg=url+'*a'
 	try:
 		s.connect((server_ip, server_port))
 		s.send(msg.encode())
-		respuesta=s.recv(1)	
+		respuesta=s.recv(256)
+		print "La respuesta es: "+respuesta	
 		s.close()
 	except socket.error, msg:
-		syslog.syslog(syslog.LOG_ERR,"Error con la conexion al Escaner- "+msg)
+		print "Error con la conexion al SecDevOps: "+str(msg)
 
-	return int(respuesta)
+conexion()
 
 
 
-def validacion():
+
+
+
+
+
+
 
