@@ -2,6 +2,7 @@
 import argparse
 import socket
 import sys
+import json
 
 parser = argparse.ArgumentParser(description='Configura los parametros para lanzar escaneos desd SecDevOps')
 parser.add_argument('--IP', type=str, help='IP del servidor donde se ejecuta el SecDevOps')
@@ -55,9 +56,12 @@ def conexion():
 		s.close()
 	except socket.error, msg:
 		print "Error con la conexion al SecDevOps: "+str(msg)
+		datos = {"status":"1"}
+		with open('data.json', 'w') as outfile:
+			json.dump(datos, outfile)
 
 conexion()
-
+#sh 'python prueba_jenkins/scripsclient.py --IP localhost --port 6969 --url juan --tipo a'
 
 
 
