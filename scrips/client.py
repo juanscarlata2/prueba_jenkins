@@ -56,7 +56,7 @@ def conexion():
 		s.close()
 	except socket.error, msg:
 		print "Error con la conexion al SecDevOps: "+str(msg)
-		datos = {"status":"1"}
+		datos = {"status":"2"}
 		with open('data.json', 'w') as outfile:
 			json.dump(datos, outfile)
 
