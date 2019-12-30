@@ -52,14 +52,12 @@ def conexion():
 		s.connect((server_ip, server_port))
 		s.send(msg.encode())
 		respuesta=s.recv(256)
-		print "La respuesta es: "+respuesta	
+		with open('data.json', 'w') as outfile:
+			json.dump(respuesta, outfile)
 		s.close()
 	except socket.error, msg:
 		print "Error con la conexion al SecDevOps: "+str(msg)
-		datos = {"status":"2"}
-		with open('data.json', 'w') as outfile:
-			json.dump(datos, outfile)
-
+		
 conexion()
 #sh 'python prueba_jenkins/scripsclient.py --IP localhost --port 6969 --url juan --tipo a'
 
