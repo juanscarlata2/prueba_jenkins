@@ -52,6 +52,7 @@ def conexion():
 		s.connect((server_ip, server_port))
 		s.send(msg.encode())
 		respuesta=s.recv(256)
+		print respuesta
 		with open('data.json', 'w') as outfile:
 			json.dump(respuesta, outfile)
 		s.close()
